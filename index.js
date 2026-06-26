@@ -336,19 +336,31 @@
     introVideo.play().catch(() => {});
     videoOverlay.classList.add('hidden');
 
-    // Tap anywhere on video → start bg music, unmute, skip to content
+    let videoUnmuted = false;
+
     videoIntro.addEventListener('click', function handler() {
-      // Start bg music on first gesture
-      if (audio) {
-        audio.play().catch(() => {});
-        playing = true;
-        if (btn) {
-          btn.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>';
+      if (!videoUnmuted) {
+        // First tap → unmute video, start bg music, let video keep playing
+        videoUnmuted = true;
+        introVideo.muted = false;
+        introVideo.currentTime = 0; // restart so they hear from beginning
+        introVideo.play().catch(() => {
+          introVideo.muted = true;
+          introVideo.play().catch(() => {});
+        });
+        if (audio) {
+          audio.play().catch(() => {});
+          playing = true;
+          if (btn) {
+            btn.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>';
+          }
         }
+      } else {
+        // Second tap → skip to content
+        introVideo.pause();
+        endVideoIntro();
+        videoIntro.removeEventListener('click', handler);
       }
-      introVideo.pause();
-      endVideoIntro();
-      videoIntro.removeEventListener('click', handler);
     });
 
     // When video naturally ends → transition to content
