@@ -7,27 +7,28 @@
     />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Primary Meta Tags -->
-    <title>Manisha &amp; Gagan | Wedding Invitation</title>
-    <meta name="title" content="Manisha &amp; Gagan | Wedding Invitation" />
+    <title>Manisha &amp; Gagan | Wedding Invitation 💍</title>
+    <meta name="title" content="Manisha &amp; Gagan | Wedding Invitation 💍" />
     <meta
       name="description"
-      content="Beautiful digital invitations for every celebration ✨ Weddings · Birthdays · All occasions. Design in minutes, share on WhatsApp."
+      content="You're invited! 💕 Join us as we celebrate the wedding of Manisha & Gagan · 20 November 2026 · Sahib Farms & Resorts ✨"
     />
 
     <!-- Open Graph / Facebook / WhatsApp -->
     <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://bubu-dudu-rose.vercel.app/" />
     <meta
       property="og:title"
-      content="Manisha &amp; Gagan | Wedding Invitation"
+      content="Manisha &amp; Gagan | Wedding Invitation 💍"
     />
     <meta
       property="og:description"
-      content="Beautiful digital invitations for every celebration ✨ Weddings · Birthdays · All occasions. Design in minutes, share on WhatsApp."
+      content="You're invited! 💕 Join us as we celebrate the wedding of Manisha &amp; Gagan · 20 November 2026 · Sahib Farms &amp; Resorts ✨"
     />
     <!-- High-res image for WhatsApp preview -->
     <meta
       property="og:image"
-      content="https://i.ibb.co/Z6mZjgyj/INVIFEST-BY-AASTHA-1.jpg"
+      content="https://bubu-dudu-rose.vercel.app/assets/db-4.jpeg"
     />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
@@ -36,21 +37,21 @@
     <meta property="twitter:card" content="summary_large_image" />
     <meta
       property="twitter:title"
-      content="Manisha &amp; Gagan | Wedding Invitation"
+      content="Manisha &amp; Gagan | Wedding Invitation 💍"
     />
     <meta
       property="twitter:description"
-      content="Beautiful digital invitations for every celebration ✨ Weddings · Birthdays · All occasions. Design in minutes, share on WhatsApp."
+      content="You're invited! 💕 Join us as we celebrate the wedding of Manisha &amp; Gagan · 20 November 2026 · Sahib Farms &amp; Resorts ✨"
     />
     <meta
       property="twitter:image"
-      content="https://i.ibb.co/Z6mZjgyj/INVIFEST-BY-AASTHA-1.jpg"
+      content="https://bubu-dudu-rose.vercel.app/assets/db-4.jpeg"
     />
     <script src="./index.js" defer></script>
     <link rel="stylesheet" href="./index.css" />
   </head>
 
-  <body class="">
+  <body class="no-scroll">
     <div id="root"
       ><audio
         id="bg-music"
@@ -97,7 +98,15 @@
         width="655"
         height="451"
       ></canvas>
-      <div id="main-content" class="visible">
+      <!-- Video Intro -->
+      <div id="video-intro" class="video-intro">
+        <video id="intro-video" src="./assets/create_a_portal_video_like_thi.mp4" playsinline preload="auto" muted></video>
+        <div id="video-overlay" class="video-intro__overlay">
+          <!-- <span class="video-intro__text">Tap to Play ▶</span> -->
+        </div>
+      </div>
+      <div class="bright-flash" id="bright-flash"></div>
+      <div id="main-content">
         <section id="hero">
           <div class="hero-corner"><span></span></div>
           <div class="hero-card"
@@ -496,7 +505,8 @@
                 style="
                   position: relative;
                   width: 100%;
-                  height: 480px;
+                  aspect-ratio: 3/4;
+                  max-height: 480px;
                   border-radius: 1rem;
                   overflow: hidden;
                   margin-bottom: 2.5rem;
@@ -695,7 +705,7 @@
                     class="event-invite-bg"
                     alt=""
                     loading="lazy"
-                    src="/assets/sang-1.jpeg"
+                    src="./assets/sang-1.jpeg"
                   />
                 </div>
                 <div class="evt-details">

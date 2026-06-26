@@ -293,24 +293,88 @@
   });
   document.body.appendChild(langToggle);
 
-  /* ── Show main content immediately ── */
+  /* ── Video Intro ──────────────────────────────────────────────── */
   const main = document.getElementById('main-content');
-  if (main) main.classList.add('visible');
-  document.body.classList.remove('no-scroll');
-
-  /* ── Music toggle ── */
+  const introVideo = document.getElementById('intro-video');
+  const videoIntro = document.getElementById('video-intro');
+  const videoOverlay = document.getElementById('video-overlay');
+  const flash = document.getElementById('bright-flash');
   const audio = document.getElementById('bg-music');
   const btn = document.querySelector('.btn-micro');
   let playing = false;
 
+  function endVideoIntro() {
+    // Bright flash transition
+    if (flash) {
+      flash.style.transition = 'opacity 0.3s ease-in';
+      flash.style.opacity = '1';
+      setTimeout(() => {
+        // Hide video intro
+        if (videoIntro) videoIntro.style.display = 'none';
+        // Show main content
+        if (main) main.classList.add('visible');
+        document.body.classList.remove('no-scroll');
+        // Ensure background music is playing
+        if (audio && audio.paused) {
+          audio.play().catch(() => {});
+          playing = true;
+        }
+        // Fade flash out
+        flash.style.transition = 'opacity 0.6s ease-out';
+        flash.style.opacity = '0';
+      }, 300);
+    } else {
+      if (videoIntro) videoIntro.style.display = 'none';
+      if (main) main.classList.add('visible');
+      document.body.classList.remove('no-scroll');
+    }
+  }
+
+  if (introVideo && videoIntro) {
+    // Start bg music immediately on first user tap (autoplay policy requires gesture)
+    videoIntro.addEventListener('click', function handler() {
+      if (introVideo.paused) {
+        videoOverlay.classList.add('hidden');
+        // Start bg music alongside video
+        if (audio) {
+          audio.play().catch(() => {});
+          playing = true;
+          if (btn) {
+            btn.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>';
+          }
+        }
+        introVideo.muted = false;
+        introVideo.play().catch(() => {
+          introVideo.muted = true;
+          introVideo.play().catch(() => {});
+        });
+      } else {
+        // Tapping while playing → skip to content
+        introVideo.pause();
+        endVideoIntro();
+        videoIntro.removeEventListener('click', handler);
+      }
+    });
+
+    // When video naturally ends → transition to content
+    introVideo.addEventListener('ended', () => {
+      endVideoIntro();
+    });
+  } else {
+    // No video element → show content immediately
+    if (main) main.classList.add('visible');
+    document.body.classList.remove('no-scroll');
+  }
+
+  /* ── Music toggle ── */
   if (btn && audio) {
     btn.addEventListener('click', () => {
       if (playing) {
         audio.pause();
-        btn.innerHTML = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>`;
+        btn.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>';
       } else {
         audio.play().catch(() => {});
-        btn.innerHTML = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>`;
+        btn.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>';
       }
       playing = !playing;
     });

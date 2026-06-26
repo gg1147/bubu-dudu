@@ -1,69 +1,105 @@
-# Manisha & Gagan — Wedding Invitation 💍
+<p align="center">
+  <img src="./assets/db-4.jpeg" width="480" alt="Manisha & Gagan" />
+</p>
 
-A single-page, interactive wedding invitation website for the wedding of **Manisha & Gagan**, celebrated at **Sahib Farms & Resorts** on **20 November 2026**.
+<h1 align="center">✨ Manisha & Gagan ✨</h1>
+<h3 align="center">~ A Love Written in the Stars ~</h3>
 
-Built as a lightweight static site — pure HTML, CSS, and vanilla JavaScript with no build step or framework. RSVPs are collected straight into a Google Sheet via a Google Apps Script web app.
+<p align="center">
+  <img src="https://img.shields.io/badge/Date-20%20November%202026-8a4f4c?style=for-the-badge&labelColor=fdfbf7" />
+  <img src="https://img.shields.io/badge/Venue-Sahib%20Farms%20%26%20Resorts-d4af37?style=for-the-badge&labelColor=fdfbf7" />
+  <img src="https://img.shields.io/badge/Type-Digital%20Invitation-c9a270?style=for-the-badge&labelColor=fdfbf7" />
+</p>
 
-## Features
+---
 
-- **Scratch-to-reveal save-the-date** — guests scratch a canvas overlay to uncover the wedding date.
-- **Live countdown** to the ceremony (20 Nov 2026, 3:00 PM IST).
-- **Falling petals** ambient animation and looping **background music** (toggleable).
-- **Bilingual** — full English / Hindi (हिंदी) toggle, powered by an in-page `data-i18n` dictionary.
-- **Our Story**, photo gallery, and venue section with a "View on Maps" link.
-- **Festivities timeline** — Haldi (12:00 PM), Sangeet Night (7:00 PM), and the Wedding (3:00 PM), each with dress code and color notes.
-- **RSVP form** capturing name, phone, attendance, party size, events attending, a song request, and marriage advice — submitted to Google Sheets.
-- Scroll-reveal animations, contacts section, and responsive mobile-first layout.
+<p align="center"><i>"A lifetime of togetherness begins with one sacred step."</i></p>
 
-## Project structure
+---
 
-```
-.
-├── index.html             # All page markup and sections
-├── index.css              # Styles (theme variables, layout, animations)
-├── index.js               # Countdown, scratch reveal, petals, i18n, RSVP submit
-├── google-apps-script.gs  # Server-side RSVP handler (deploy to Google Apps Script)
-├── assets/                # Photos, background music, video, Ganesha image
-├── fonts/                 # Distrela.ttf (display font)
-└── LICENSE
-```
+## 🌸 What Is This?
 
-## Running locally
+A **beautiful, interactive digital wedding invitation** — designed to be shared via WhatsApp, Instagram, or any link. No apps to install, no accounts to create. Just open and experience the magic.
 
-It's a static site — no install or build required. Serve the folder with any static server so that the audio, fonts, and assets load over HTTP:
+## 💫 The Experience
 
-```bash
-# Python
-python3 -m http.server 8000
+| Step | What Happens |
+|:---:|---|
+| 🎬 | **Portal Video** — A cinematic intro video plays fullscreen when you tap |
+| 🎵 | **Background Music** — Soft wedding music begins playing instantly |
+| ✨ | **Bright Flash** — A magical transition reveals the invitation |
+| 🕉️ | **Sacred Blessings** — Opens with Ganesh Vandana and family blessings |
+| 💕 | **Couple Names** — Manisha & Gagan in shimmering gold gradient |
+| 🗓️ | **Scratch to Reveal** — Guests scratch cards to discover the wedding date |
+| ⏳ | **Live Countdown** — Real-time countdown to the ceremony |
+| 📸 | **Our Story** — A polaroid-style photo gallery of memories |
+| 🏛️ | **The Venue** — Sahib Farms & Resorts with Google Maps link |
+| 🎉 | **Festivities** — Haldi, Sangeet Night & Sun Downer Wedding with dress codes |
+| 💌 | **RSVP** — Guests confirm attendance, pick events, request a song & share advice |
+| 📞 | **Contacts** — Groom's & Bride's family numbers |
+| 🌺 | **Falling Petals** — Ambient rose petals floating across the screen |
 
-# or Node
-npx serve .
-```
+## 🎨 Three Beautiful Events
 
-Then open <http://localhost:8000>.
+<table>
+<tr>
+<td align="center" width="33%">
 
-## Setting up RSVP collection
+### 🌼 Haldi Ceremony
+**19 Nov · 12:00 PM**
 
-The RSVP form posts to a Google Apps Script web app that appends each submission as a row in a Google Sheet.
+*"A joyful splash of turmeric, blessings, and laughter."*
 
-1. Create a Google Sheet and add these headers in row 1:
-   `Timestamp | Name | Phone | Attending | Party Size | Events | Song | Advice`
-2. In the sheet, go to **Extensions → Apps Script**, paste the contents of [`google-apps-script.gs`](google-apps-script.gs), and **Save**.
-3. **Deploy → New deployment → Web app**:
-   - Execute as: **Me**
-   - Who has access: **Anyone** (not "Anyone with Google Account")
-4. Authorize when prompted, then copy the Web App URL (`https://script.google.com/macros/s/.../exec`).
-5. Paste that URL into `SHEET_ENDPOINT` in [`index.js`](index.js).
+🟡 Yellow · 🩷 Pink · 🍑 Peach
 
-Until `SHEET_ENDPOINT` is set, the form still shows the thank-you confirmation but does not record submissions. Every edit to the Apps Script requires a **new deployment** (or a new version of the existing one) to take effect.
+</td>
+<td align="center" width="33%">
 
-## Customizing
+### 🎶 Sangeet Night
+**19 Nov · 7:00 PM**
 
-- **Wedding date / countdown** — `WEDDING_DATE` in `index.js`.
-- **Text & translations** — the `i18n` object (`en` / `hi`) in `index.js`.
-- **Photos & media** — replace files in `assets/`.
-- **Colors & fonts** — CSS variables and `@font-face` near the top of `index.css`.
+*"An evening of music, dance, and endless celebration."*
 
-## License
+🔵 Blue · ⚫ Black · 🟢 Dark Green
 
-See [LICENSE](LICENSE).
+</td>
+<td align="center" width="33%">
+
+### 💒 Sun Downer Wedding
+**20 Nov · 3:00 PM**
+
+*"Vows beneath the setting sun to begin our forever."*
+
+🟤 Maroon · 🤍 Ivory · 🥇 Gold
+
+</td>
+</tr>
+</table>
+
+## 🗣️ Bilingual — English & हिंदी
+
+Toggle between **English** and **Hindi** with a single tap. Every piece of text — from the blessings to the RSVP form — is fully translated.
+
+## 💌 RSVP → Google Sheets
+
+Guests fill out a beautiful form with:
+- ✅ Name & Phone
+- 🎉 Joyfully Accept / Regrettably Decline
+- 👥 Party Size
+- 🎪 Which events they'll attend
+- 🎵 A song request for the dance floor
+- 💬 Marriage advice
+
+All responses flow directly into a **Google Sheet** — no database needed.
+
+## 🛠️ Built With Love
+
+> Pure **HTML**, **CSS** & **vanilla JavaScript** — no frameworks, no build tools, no complexity. Just open and it works.
+
+---
+
+<p align="center">
+  <b>🕊️ With love and blessings 🕊️</b><br/>
+  <i>The Lovely People's</i><br/><br/>
+  <b>Manisha & Gagan</b>
+</p>
