@@ -322,11 +322,15 @@
         // Fade flash out
         flash.style.transition = 'opacity 0.6s ease-out';
         flash.style.opacity = '0';
+        // Show swipe-up hint after a brief pause
+        setTimeout(showScrollHint, 1800);
       }, 300);
     } else {
       if (videoIntro) videoIntro.style.display = 'none';
       if (main) main.classList.add('visible');
       document.body.classList.remove('no-scroll');
+      // Show swipe-up hint after a brief pause
+      setTimeout(showScrollHint, 1800);
     }
   }
 
@@ -371,6 +375,47 @@
     // No video element → show content immediately
     if (main) main.classList.add('visible');
     document.body.classList.remove('no-scroll');
+  }
+
+  /* ── Scroll hint overlay (swipe-up gesture) ── */
+  function showScrollHint() {
+    const hint = document.createElement('div');
+    hint.id = 'scroll-hint-overlay';
+    hint.innerHTML = `
+      <div class="scroll-hint-hand">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 11V6a2 2 0 0 0-4 0v5"/>
+          <path d="M14 10V4a2 2 0 0 0-4 0v7"/>
+          <path d="M10 10.5V6a2 2 0 0 0-4 0v8"/>
+          <path d="M18 11a2 2 0 0 1 4 0v3a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/>
+        </svg>
+      </div>
+      <span class="scroll-hint-text">Swipe up for more</span>
+      <div class="scroll-hint-arrows">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+      </div>
+    `;
+    document.body.appendChild(hint);
+
+    // Fade in
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => { hint.style.opacity = '1'; });
+    });
+
+    // Remove on first scroll or tap
+    function dismiss() {
+      hint.style.opacity = '0';
+      setTimeout(() => hint.remove(), 500);
+      window.removeEventListener('scroll', dismiss);
+      window.removeEventListener('touchstart', dismiss);
+    }
+    window.addEventListener('scroll', dismiss, { once: true, passive: true });
+    window.addEventListener('touchstart', dismiss, { once: true, passive: true });
+
+    // Auto-dismiss after 5s if user hasn't scrolled
+    setTimeout(() => {
+      if (document.body.contains(hint)) dismiss();
+    }, 5000);
   }
 
   /* ── Music toggle ── */
@@ -560,21 +605,33 @@
     animatePetals();
   }
 
-  /* ── Simple scroll reveal ── */
+  /* ── Vibrant scroll reveal with staggered animations ── */
   const reveals = document.querySelectorAll(
-    '.reveal, .event-block, .venue-card, .cd-card'
+    '.reveal, .event-block, .venue-card, .cd-card, .story-card-wrapper, .evt-details, .scratch-section, .footer-msg'
   );
+
+  // Set initial hidden state with varied transform origins
+  reveals.forEach((el, i) => {
+    el.style.opacity = '0';
+    el.style.transition = `opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1) ${(i % 3) * 0.1}s, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) ${(i % 3) * 0.1}s`;
+    // Alternate directions for visual variety
+    if (i % 3 === 0) el.style.transform = 'translateY(60px) scale(0.95)';
+    else if (i % 3 === 1) el.style.transform = 'translateX(-30px) translateY(40px)';
+    else el.style.transform = 'translateX(30px) translateY(40px)';
+  });
+
   if ('IntersectionObserver' in window) {
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
           if (e.isIntersecting) {
             e.target.style.opacity = '1';
-            e.target.style.transform = 'translate(0, 0)';
+            e.target.style.transform = 'translate(0, 0) scale(1)';
+            io.unobserve(e.target); // Only animate once
           }
         });
       },
-      { threshold: 0.15 }
+      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
     );
     reveals.forEach((el) => io.observe(el));
   }
@@ -754,6 +811,17 @@
         }
       });
     }
+  }
+
+  /* ── Scroll progress bar ── */
+  const progressBar = document.getElementById('scroll-progress');
+  if (progressBar) {
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      progressBar.style.width = progress + '%';
+    }, { passive: true });
   }
 
   /* ── Venue button ── */
