@@ -197,9 +197,12 @@
       bride_side: 'वधू पक्ष',
       groom_father: 'वर के पिता',
       groom_brother: 'वर का भाई',
+      groom_mother: 'वर की माँ',
+      groom_sister: 'वर की बहन',
       groom_label: 'दूल्हा',
       bride_father: 'वधू के पिता',
       bride_brother: 'वधू का भाई',
+      bride_mother: 'वधू की माँ',
       bride_label: 'दुल्हन',
       footer_msg:
         'आपकी उपस्थिति इस प्रेम कहानी को एक यादगार ब्लॉकबस्टर बना देगी।<br/><br/>आइए, नाचें, हँसें और सच्चे बॉलीवुड अंदाज़ में जश्न मनाएँ!',
