@@ -158,6 +158,15 @@
       couple_manisha: 'Manisha',
       couple_gagan: 'Gagan',
       couple_amp: '&',
+      just_married: 'Just Married',
+      married_quote: 'And so, the sweetest chapter begins — happily ever after',
+      married_badge: 'Mr. & Mrs.',
+      married_date_label: 'Married on 20 · 11 · 2026',
+      married_since: 'Together forever since',
+      married_days_label: 'DAYS OF FOREVER',
+      thank_you_title: 'Thank You',
+      thank_you_msg:
+        'Your love, blessings and presence made our day truly magical. We are forever grateful.',
     },
     hi: {
       intro_text:
@@ -241,6 +250,15 @@
       couple_manisha: 'मनीषा',
       couple_gagan: 'गगन',
       couple_amp: '&',
+      just_married: 'विवाह सम्पन्न',
+      married_quote: 'और इस तरह शुरू हुआ एक नया अध्याय — हमेशा के लिए',
+      married_badge: 'श्री एवं श्रीमती',
+      married_date_label: '20 · 11 · 2026 को विवाह सम्पन्न',
+      married_since: 'हमेशा साथ, तब से',
+      married_days_label: 'दिन साथ',
+      thank_you_title: 'धन्यवाद',
+      thank_you_msg:
+        'आपके प्रेम, आशीर्वाद और उपस्थिति ने इस दिन को यादगार बना दिया। हम हृदय से आभारी हैं।',
     },
   };
 
@@ -296,6 +314,10 @@
   });
   document.body.appendChild(langToggle);
 
+  /* ── Wedding date (used by video-intro skip + countdown) ── */
+  const WEDDING_DATE = new Date('2026-11-20T15:00:00+05:30');
+  const isMarried = WEDDING_DATE - new Date() <= 0;
+
   /* ── Video Intro ──────────────────────────────────────────────── */
   const main = document.getElementById('main-content');
   const introVideo = document.getElementById('intro-video');
@@ -305,6 +327,13 @@
   const audio = document.getElementById('bg-music');
   const btn = document.querySelector('.btn-micro');
   let playing = false;
+
+  // Post-wedding: skip the intro video entirely and reveal main content.
+  if (isMarried) {
+    if (videoIntro) videoIntro.style.display = 'none';
+    if (main) main.classList.add('visible');
+    document.body.classList.remove('no-scroll');
+  }
 
   function endVideoIntro() {
     // Bright flash transition
@@ -337,7 +366,7 @@
     }
   }
 
-  if (introVideo && videoIntro) {
+  if (introVideo && videoIntro && !isMarried) {
     // Autoplay muted video immediately (no black screen wait)
     introVideo.muted = true;
     introVideo.play().catch(() => {});
@@ -436,24 +465,106 @@
   }
 
   /* ── Countdown timer ── */
-  const WEDDING_DATE = new Date('2026-11-20T15:00:00+05:30');
+
+  function buildMarriedView(card) {
+    if (card.querySelector('.cd-married')) return;
+    const married = document.createElement('div');
+    married.className = 'cd-married';
+    married.innerHTML = `
+      <div class="cd-married__badge" data-i18n="married_badge">Mr. &amp; Mrs.</div>
+      <div class="cd-married__rings" aria-hidden="true">
+        <span class="cd-ring cd-ring--l">💍</span>
+        <span class="cd-ring cd-ring--r">💍</span>
+      </div>
+      <div class="cd-married__title" data-i18n="just_married">Just Married</div>
+      <div class="cd-married__date" data-i18n="married_date_label">Married on 20 · 11 · 2026</div>
+      <div class="cd-married__since">
+        <span class="cd-married__since-label" data-i18n="married_since">Together forever since</span>
+        <span class="cd-married__count"><span class="cd-married__num">0</span>
+          <span class="cd-married__num-lbl" data-i18n="married_days_label">DAYS OF FOREVER</span>
+        </span>
+      </div>
+      <div class="cd-married__thanks">
+        <div class="cd-married__thanks-title" data-i18n="thank_you_title">Thank You</div>
+        <p class="cd-married__thanks-msg" data-i18n="thank_you_msg">Your love, blessings and presence made our day truly magical. We are forever grateful.</p>
+      </div>
+      <div class="cd-married__petals" aria-hidden="true">
+        <span>🌸</span><span>🌺</span><span>✨</span><span>🌼</span><span>💐</span>
+      </div>
+    `;
+    card.appendChild(married);
+    // Localize any new nodes
+    married.querySelectorAll('[data-i18n]').forEach((el) => {
+      const key = el.getAttribute('data-i18n');
+      if (i18n[currentLang] && i18n[currentLang][key]) {
+        el.innerHTML = i18n[currentLang][key];
+      }
+    });
+  }
 
   function updateCountdown() {
     const now = new Date();
-    let diff = WEDDING_DATE - now;
-    if (diff < 0) diff = 0;
+    const diff = WEDDING_DATE - now;
+    const card = document.querySelector('#countdown-section .cd-card');
 
-    const days = Math.floor(diff / 86400000);
-    const hours = Math.floor((diff % 86400000) / 3600000);
-    const mins = Math.floor((diff % 3600000) / 60000);
-    const secs = Math.floor((diff % 60000) / 1000);
+    if (diff > 0) {
+      const days = Math.floor(diff / 86400000);
+      const hours = Math.floor((diff % 86400000) / 3600000);
+      const mins = Math.floor((diff % 3600000) / 60000);
+      const secs = Math.floor((diff % 60000) / 1000);
 
-    const nums = document.querySelectorAll('.cd-num');
-    if (nums.length >= 4) {
-      nums[0].textContent = days;
-      nums[1].textContent = hours;
-      nums[2].textContent = String(mins).padStart(2, '0');
-      nums[3].textContent = String(secs).padStart(2, '0');
+      const nums = document.querySelectorAll('.cd-num');
+      if (nums.length >= 4) {
+        nums[0].textContent = days;
+        nums[1].textContent = hours;
+        nums[2].textContent = String(mins).padStart(2, '0');
+        nums[3].textContent = String(secs).padStart(2, '0');
+      }
+      return;
+    }
+
+    // Wedding is here / past → switch to "Just Married" celebration
+    if (!card) return;
+    card.classList.add('cd-card--married');
+
+    // Hide pre-wedding bits (quote, script, date label, countdown grid)
+    const grid = card.querySelector('.cd-grid');
+    const quote = card.querySelector('.cd-quote');
+    const script = card.querySelector('.cd-script');
+    const preDate = card.querySelector('.cd-date');
+    [grid, quote, script, preDate].forEach((el) => {
+      if (el) el.style.display = 'none';
+    });
+
+    // Post-wedding: keep only the married card + "Our Story" section; hide everything else.
+    const sectionIdsToHide = [
+      'hero',
+      'venue-section',
+      'events-section',
+      'rsvp-section',
+      'contacts-section',
+      'footer-section',
+    ];
+    sectionIdsToHide.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) el.style.display = 'none';
+    });
+    // Hide the pre-wedding "Save the Date" scratch section (duplicate #countdown-section without a .cd-card)
+    document.querySelectorAll('#countdown-section').forEach((sec) => {
+      if (!sec.querySelector('.cd-card')) sec.style.display = 'none';
+    });
+
+    buildMarriedView(card);
+
+    // Update elapsed-days counter
+    const elapsedDays = Math.max(0, Math.floor(-diff / 86400000));
+    const numEl = card.querySelector('.cd-married__num');
+    if (numEl) numEl.textContent = elapsedDays;
+
+    // Update the day/days label (singular on day 1, English only)
+    const lblEl = card.querySelector('.cd-married__num-lbl');
+    if (lblEl && elapsedDays === 1 && currentLang === 'en') {
+      lblEl.textContent = 'DAY OF FOREVER';
     }
   }
 
