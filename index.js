@@ -83,6 +83,8 @@
         'With the blessings of Shri Ganesh and our beloved families, we joyfully invite you to celebrate the union of',
       parent_sub:
         'Daughter of Mrs. Sunita & Mr. Mukesh Kumar Gupta & Son of Mrs. Sneh & Mr. Ashok Kumar',
+      parent_groom: 'Son of Mrs. Sneh & Mr. Ashok Kumar',
+      parent_bride: 'Daughter of Mrs. Sunita & Mr. Mukesh Kumar Gupta',
       scroll_hint: 'Scroll to see magic',
       save_date: 'Save the Date',
       scratch_desc: 'Scratch below to reveal our wedding date',
@@ -172,8 +174,8 @@
       intro_text:
         'श्री गणेश जी और अपने परिवारजनों के आशीर्वाद से, हम आपको इस पवित्र बंधन में सम्मिलित होने का हर्षपूर्वक निमंत्रण देते हैं',
       parent_sub:
-        'श्रीमती सुनीता एवं श्री मुकेश कुमार गुप्ता की सुपुत्री एवं श्रीमती स्नेह एवं श्री अशोक कुमार के सुपुत्र',
-      scroll_hint: 'जादू देखने के लिए स्क्रॉल करें',
+        'श्रीमती सुनीता एवं श्री मुकेश कुमार गुप्ता की सुपुत्री एवं श्रीमती स्नेह एवं श्री अशोक कुमार के सुपुत्र',      parent_groom: 'श्रीमती स्नेह एवं श्री अशोक कुमार के सुपुत्र',
+      parent_bride: 'श्रीमती सुनीता एवं श्री मुकेश कुमार गुप्ता की सुपुत्री',      scroll_hint: 'जादू देखने के लिए स्क्रॉल करें',
       save_date: 'तारीख़ याद रखें',
       scratch_desc: 'शादी की तारीख़ जानने के लिए स्क्रैच करें',
       the_date: 'तारीख़',
