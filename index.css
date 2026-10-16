@@ -2429,3 +2429,220 @@ body:not(:has(.cd-card--married)) {
     letter-spacing: 0.5em;
 }
 
+.story-carousel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(0.5rem, 3vw, 2rem);
+    padding: 1rem 1rem 5vh;
+}
+
+.story-stack-container {
+    display: flex;
+    gap: clamp(1rem, 4vw, 3rem);
+    width: min(82vw, 480px);
+    padding: 1rem 1rem 2rem;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    scrollbar-color: var(--sage-dark) var(--cream-3);
+    scrollbar-width: thin;
+    -webkit-overflow-scrolling: touch;
+}
+
+.story-card-wrapper {
+    position: relative;
+    top: auto;
+    flex: 0 0 100%;
+    height: clamp(300px, 62vh, 560px);
+    align-items: stretch;
+    scroll-snap-align: center;
+}
+
+.story-polaroid {
+    width: 100%;
+    max-width: none;
+    padding: 12px 12px 54px;
+}
+
+.story-polaroid img {
+    object-fit: contain;
+    background: var(--cream-2);
+}
+
+.story-carousel-btn {
+    display: grid;
+    flex: 0 0 2.75rem;
+    width: 2.75rem;
+    height: 2.75rem;
+    place-items: center;
+    border: 1px solid var(--sage-border);
+    border-radius: 50%;
+    background: var(--white);
+    color: var(--sage-deep);
+    font-size: 2rem;
+    line-height: 1;
+    box-shadow: var(--shadow-sm);
+    transition: background-color 0.2s ease, color 0.2s ease, opacity 0.2s ease;
+}
+
+.story-carousel-btn:hover:not(:disabled) {
+    background: var(--sage-deep);
+    color: var(--white);
+}
+
+.story-carousel-btn:disabled {
+    cursor: default;
+    opacity: 0.4;
+}
+
+.attending-options {
+    display: grid;
+    gap: 0.75rem;
+}
+
+.attending-option {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    min-height: 3.5rem;
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--sage-border);
+    border-radius: 0.75rem;
+    background: var(--white);
+    color: var(--sage-deep);
+    cursor: pointer;
+    font-family: var(--font-serif, var(--font-body));
+    font-size: 1.1rem;
+    letter-spacing: 0.04em;
+    text-transform: none;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.attending-option.is-selected {
+    border-color: var(--sage-deep);
+    background: var(--sage-pale);
+}
+
+.attending-option input {
+    flex: 0 0 auto;
+    width: 1.2rem;
+    height: 1.2rem;
+    margin: 0;
+    accent-color: var(--sage-deep);
+}
+
+.attending-option:focus-within {
+    outline: 2px solid var(--sage-deep);
+    outline-offset: 2px;
+}
+
+@media (max-width: 600px) {
+    .story-carousel {
+        gap: 0.5rem;
+        padding-inline: 0.5rem;
+    }
+
+    .story-stack-container {
+        width: calc(100vw - 6rem);
+        gap: 1rem;
+        padding-inline: 0.5rem;
+    }
+
+    .story-card-wrapper {
+        flex-basis: 100%;
+        height: clamp(300px, 58vh, 500px);
+    }
+
+    .story-carousel-btn {
+        flex-basis: 2.25rem;
+        width: 2.25rem;
+        height: 2.25rem;
+    }
+}
+
+/* Small finishing touches shared across the invitation */
+:focus-visible {
+    outline: 2px solid var(--sage-deep);
+    outline-offset: 3px;
+}
+
+.event-invite-frame {
+    box-shadow: 0 16px 38px -18px rgba(80, 48, 42, 0.42);
+}
+
+.event-invite-bg {
+    transition: transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.event-block:hover .event-invite-bg {
+    transform: scale(1.035);
+}
+
+.venue-img-wrap img {
+    transition: transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.venue-card:hover .venue-img-wrap img {
+    transform: scale(1.025);
+}
+
+.venue-btn:focus-visible,
+.story-carousel-btn:focus-visible {
+    outline-offset: 4px;
+}
+
+#rsvp-section .evt-details {
+    min-height: 0;
+    padding: clamp(1.25rem, 4vw, 2rem);
+}
+
+#rsvp-section input:not([type="radio"]):focus,
+#rsvp-section select:focus,
+#rsvp-section textarea:focus {
+    border-color: var(--sage-deep) !important;
+    box-shadow: 0 2px 0 var(--sage-deep);
+}
+
+#rsvp-section select {
+    cursor: pointer;
+}
+
+#rsvp-section textarea {
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.attending-option:hover {
+    border-color: var(--sage-dark) !important;
+}
+
+.story-carousel-btn:hover:not(:disabled),
+.venue-btn:hover {
+    transform: translateY(-2px);
+}
+
+@media (max-width: 600px) {
+    #rsvp-section {
+        padding: 4rem 1rem !important;
+    }
+
+    #rsvp-section .rsvp-form {
+        width: 100%;
+    }
+
+    .event-block {
+        margin-bottom: 3rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}

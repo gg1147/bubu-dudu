@@ -723,7 +723,7 @@
 
   /* ── Vibrant scroll reveal with staggered animations ── */
   const reveals = document.querySelectorAll(
-    '.reveal, .event-block, .venue-card, .cd-card, .story-card-wrapper, .evt-details, .scratch-section, .footer-msg'
+    '.reveal, .event-block, .venue-card, .cd-card, .evt-details, .scratch-section, .footer-msg'
   );
 
   // Set initial hidden state with varied transform origins
@@ -750,6 +750,34 @@
       { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
     );
     reveals.forEach((el) => io.observe(el));
+  }
+
+  const storyTrack = document.getElementById('story-carousel-track');
+  if (storyTrack) {
+    const storyButtons = document.querySelectorAll('.story-carousel-btn');
+    const updateStoryButtons = () => {
+      const maxScroll = storyTrack.scrollWidth - storyTrack.clientWidth;
+      const edgeTolerance = 12;
+      storyButtons.forEach((button) => {
+        button.disabled =
+          button.dataset.storyDirection === 'prev'
+            ? storyTrack.scrollLeft <= edgeTolerance
+            : storyTrack.scrollLeft >= maxScroll - edgeTolerance;
+      });
+    };
+
+    storyButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const direction = button.dataset.storyDirection === 'next' ? 1 : -1;
+        storyTrack.scrollBy({
+          left: direction * storyTrack.clientWidth * 0.8,
+          behavior: 'smooth',
+        });
+      });
+    });
+    storyTrack.addEventListener('scroll', updateStoryButtons, { passive: true });
+    window.addEventListener('resize', updateStoryButtons);
+    updateStoryButtons();
   }
 
   /* ── RSVP form → Google Sheet ─────────────────────────────────────────
@@ -789,25 +817,22 @@
       paint();
     });
 
-    /* -- "Will you join us?" radios: move the highlight on selection -- */
     const attendingInputs = form.querySelectorAll('input[name="attending"]');
     const paintAttending = () => {
-      attendingInputs.forEach((inp) => {
-        const lbl = inp.closest('label');
-        if (!lbl) return;
-        if (inp.checked) {
-          lbl.style.background = 'rgb(138, 79, 76)';
-          lbl.style.color = 'white';
-          lbl.style.borderColor = 'rgb(138, 79, 76)';
-        } else {
-          lbl.style.background = 'rgb(255, 255, 255)';
-          lbl.style.color = 'rgb(138, 79, 76)';
-          lbl.style.borderColor = 'rgb(226, 215, 200)';
-        }
+      attendingInputs.forEach((input) => {
+        const option = input.closest('.attending-option');
+        if (!option) return;
+        option.classList.toggle('is-selected', input.checked);
+        option.style.backgroundColor = input.checked
+          ? 'rgb(255, 249, 248)'
+          : 'rgb(255, 255, 255)';
+        option.style.borderColor = input.checked
+          ? 'rgb(138, 79, 76)'
+          : 'rgb(234, 201, 199)';
       });
     };
-    attendingInputs.forEach((inp) =>
-      inp.addEventListener('change', paintAttending)
+    attendingInputs.forEach((input) =>
+      input.addEventListener('change', paintAttending)
     );
     paintAttending();
 

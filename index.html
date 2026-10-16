@@ -1,6 +1,5 @@
 <html lang="en" style="scroll-behavior: smooth">
   <head>
-    <meta></meta>
     <meta charset="UTF-8" />
     <link
       rel="icon"
@@ -380,7 +379,7 @@
               </div>
             </div>
           </section>
-          <section style="background: var(--cream)">
+          <section class="story-section" style="background: var(--cream)">
             <div
               style="
                 text-align: center;
@@ -403,27 +402,42 @@
                 >Forever Us</h2
               >
             </div>
-            <div class="story-stack-container" style="padding-bottom: 5vh">
-              <div
-                class="story-card-wrapper"
-                style="
-                  transform: scale(1) rotate(-2.5deg);
-                  filter: brightness(1);
-                  opacity: 1;
-                "
+            <div class="story-carousel">
+              <button
+                class="story-carousel-btn"
+                type="button"
+                data-story-direction="prev"
+                aria-label="Previous story photo"
+                disabled
+                >‹</button
               >
-                <div class="story-polaroid"
-                  ><img
-                    alt="Memories together"
-                    loading="lazy"
-                    decoding="async"
-                    src="./assets/db-1.jpeg"
-                  />
-                  <div class="story-polaroid-caption" data-i18n="story_1"
-                    >Memories together</div
-                  >
+              <div
+                class="story-stack-container"
+                id="story-carousel-track"
+                role="region"
+                aria-label="Our story photos"
+                tabindex="0"
+              >
+                <div
+                  class="story-card-wrapper"
+                  style="
+                    transform: scale(1) rotate(-2.5deg);
+                    filter: brightness(1);
+                    opacity: 1;
+                  "
+                >
+                  <div class="story-polaroid"
+                    ><img
+                      alt="Memories together"
+                      loading="lazy"
+                      decoding="async"
+                      src="./assets/db-1.jpeg"
+                    />
+                    <div class="story-polaroid-caption" data-i18n="story_1"
+                      >Memories together</div
+                    >
+                  </div>
                 </div>
-              </div>
               <div
                 class="story-card-wrapper"
                 style="
@@ -485,6 +499,14 @@
                 </div>
               </div>
             </div>
+            <button
+              class="story-carousel-btn"
+              type="button"
+              data-story-direction="next"
+              aria-label="Next story photo"
+              >›</button
+            >
+          </div>
           </section>
           <section id="venue-section"
             ><span
@@ -1011,61 +1033,28 @@
                     margin-bottom: 1.5rem;
                   "
                   ><span data-i18n="will_you_join">Will you join us?</span></p
-                ><label
-                  class="btn-micro"
-                  style="
-                    display: block;
-                    background: rgb(138, 79, 76);
-                    color: white;
-                    border: 1px solid rgb(138, 79, 76);
-                    border-radius: 2rem;
-                    padding: 1rem;
-                    text-align: center;
-                    margin-bottom: 1rem;
-                    cursor: pointer;
-                    transition: 0.3s;
-                    font-family: var(--font-serif);
-                    font-size: 1rem;
-                    letter-spacing: 0.1em;
-                    text-transform: uppercase;
-                  "
-                  ><input
-                    readonly=""
-                    type="radio"
-                    value="yes"
-                    checked=""
-                    name="attending"
-                    style="display: none"
-                  /><span data-i18n="joyfully_accept"
-                    >Joyfully accept 🎉</span
-                  ></label
-                ><label
-                  class="btn-micro"
-                  style="
-                    display: block;
-                    background: rgb(255, 255, 255);
-                    color: rgb(138, 79, 76);
-                    border: 1px solid rgb(226, 215, 200);
-                    border-radius: 2rem;
-                    padding: 1rem;
-                    text-align: center;
-                    cursor: pointer;
-                    transition: 0.3s;
-                    font-family: var(--font-serif);
-                    font-size: 1rem;
-                    letter-spacing: 0.1em;
-                    text-transform: uppercase;
-                  "
-                  ><input
-                    readonly=""
-                    type="radio"
-                    value="no"
-                    name="attending"
-                    style="display: none"
-                  /><span data-i18n="regrettably_decline"
-                    >Regrettably decline</span
-                  ></label
+                ><div
+                  class="attending-options"
+                  role="radiogroup"
+                  aria-label="Will you join us?"
                 >
+                  <label class="attending-option"
+                    ><input
+                      type="radio"
+                      value="yes"
+                      checked
+                      name="attending"
+                    /><span data-i18n="joyfully_accept"
+                      >Joyfully accept 🎉</span
+                    ></label
+                  >
+                  <label class="attending-option"
+                    ><input type="radio" value="no" name="attending" /><span
+                      data-i18n="regrettably_decline"
+                      >Regrettably decline</span
+                    ></label
+                  >
+                </div>
               </div>
               <div
                 class="evt-details"
